@@ -12,7 +12,7 @@ while true
     frame = getsnapshot(vid);
     %frame = frame(:,:,1) >= 90;
     
-    recorte = PreProcessamento(frame);
+    recorte = preProcessamento(frame);
     %imshow(recorte);
     
     se_menu = abs(double(recorte(329,22)) - 105);
@@ -25,21 +25,21 @@ while true
         maior_r = 0;
         a_maior_r = 1;
 
-        if(BuscaPorHash(qsa, recorte, a) == 0)
+        if(buscaPorHash(qsa, recorte, a) == 0)
             %a = 2;
             qsa(length(qsa) + 1).s = recorte;
             qsa(length(qsa)).a = a;
             qsa(length(qsa)).r = 0;
             posicao = length(qsa);
         else
-            posicao = BuscaPorHash(qsa, recorte, a);
+            posicao = buscaPorHash(qsa, recorte, a);
             while(posicao ~= 0 & a < 5)
                 if(qsa(posicao).r > maior_r)
                     maior_r = qsa(posicao).r;
                     a_maior_r = a;
                 end;
                 a = a + 1;
-                posicao = BuscaPorHash(qsa, recorte, a);
+                posicao = buscaPorHash(qsa, recorte, a);
             end;
             if(a == 5)
                 a = a_maior_r;
@@ -66,7 +66,7 @@ while true
         end;
 
         frame = getsnapshot(vid);
-        recorte = PreProcessamento(frame);
+        recorte = preProcessamento(frame);
 
         num0 = imcrop(frame,[208 26 10 10]);
         num1 = imcrop(frame,[195 26 10 10]);
@@ -80,23 +80,17 @@ while true
         %qtd_vidas = NumVidas(frame);
         %disp(qtd_vidas);
 
-        dig(8) = MenorDistancia(num0);
-        dig(7) = MenorDistancia(num1);
-        dig(6) = MenorDistancia(num2);
-        dig(5) = MenorDistancia(num3);
-        dig(4) = MenorDistancia(num4);
-        dig(3) = MenorDistancia(num5);
-        dig(2) = MenorDistancia(num6);
-        dig(1) = MenorDistancia(num7);
+        dig(8) = menorDistancia(num0);
+        dig(7) = menorDistancia(num1);
+        dig(6) = menorDistancia(num2);
+        dig(5) = menorDistancia(num3);
+        dig(4) = menorDistancia(num4);
+        dig(3) = menorDistancia(num5);
+        dig(2) = menorDistancia(num6);
+        dig(1) = menorDistancia(num7);
 
         recompensa = sum(10.^(length(dig)-1:-1:0).*dig) - recompensa;
         qsa(posicao).r = qsa(posicao).r + alpha * ( recompensa * gama * maior_r - qsa(posicao).r );
         %disp(sum(10.^(length(dig)-1:-1:0).*dig));
-        
-    end;
-    
-    
-    
+    end;    
 end
-
-%preview(imcrop(vid,[109 39 104 13]));

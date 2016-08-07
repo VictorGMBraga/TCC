@@ -1,4 +1,4 @@
-function pos = BuscaPorHash( qsa, s, a )
+function pos = buscaPorHash( qsa, s, a )
     if(length(qsa) > 0)
         for i = 1 : length(qsa)
             %if(isequal(qsa(i).s, s) && (qsa(i).a == a))

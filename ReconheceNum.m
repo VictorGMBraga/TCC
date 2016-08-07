@@ -1,4 +1,4 @@
-function resultado = ReconheceNum( img, pos, matrizes )
+function resultado = reconheceNum( img, pos, matrizes )
     menor_dist = inf;
     for i = 1:10
         for j = 1:size(matrizes,3)

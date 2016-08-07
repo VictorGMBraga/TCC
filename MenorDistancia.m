@@ -1,4 +1,4 @@
-function num = MenorDistancia( img1 )
+function num = menorDistancia( img1 )
     
     temp = img1(:,:,1) >= 90;
     [B,L] = bwboundaries(temp, 'noholes');
