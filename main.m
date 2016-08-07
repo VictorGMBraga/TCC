@@ -16,13 +16,12 @@ while true
     %imshow(recorte);
     
     se_menu = abs(double(recorte(329,22)) - 105);
-    disp(se_menu);
     
     if(se_menu < 10)
         atira();
     else
         a = 1;
-        maior_r = 0;
+        maior_r = 1;
         a_maior_r = 1;
 
         if(buscaPorHash(qsa, recorte, a) == 0)
@@ -35,6 +34,7 @@ while true
             posicao = buscaPorHash(qsa, recorte, a);
             while(posicao ~= 0 & a < 5)
                 if(qsa(posicao).r > maior_r)
+                    disp('OI');
                     maior_r = qsa(posicao).r;
                     a_maior_r = a;
                 end;
@@ -43,6 +43,7 @@ while true
             end;
             if(a == 5)
                 a = a_maior_r;
+                posicao = buscaPorHash(qsa, recorte, a);
             else
                 qsa(length(qsa) + 1).s = recorte;
                 qsa(length(qsa)).a = a;
@@ -53,7 +54,8 @@ while true
 
         switch(a)
             case 1
-                disp('PARADO');
+                disp('POW');
+                atira();
             case 2
                 disp('ESQ');
                 andaEsq();
@@ -61,8 +63,7 @@ while true
                 disp('DIR');
                 andaDir();
             case 4
-                disp('POW');
-                atira();
+                disp('PARADO');
         end;
 
         frame = getsnapshot(vid);
@@ -91,6 +92,7 @@ while true
 
         recompensa = sum(10.^(length(dig)-1:-1:0).*dig) - recompensa;
         qsa(posicao).r = qsa(posicao).r + alpha * ( recompensa * gama * maior_r - qsa(posicao).r );
+        %disp(qsa(posicao).r);
         %disp(sum(10.^(length(dig)-1:-1:0).*dig));
     end;    
 end

@@ -11,7 +11,7 @@ function num = menorDistancia( img1 )
         menor = inf;
 
         for i = 1:10
-            diff = DistanciaEuclidiana(img1,reshape(matrizes(i,6,1,:,:,:),[11,11,3]));
+            diff = distanciaEuclidiana(img1,reshape(matrizes(i,6,1,:,:,:),[11,11,3]));
             if diff < menor
                 numero = i;
                 menor = diff;
