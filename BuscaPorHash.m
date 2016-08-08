@@ -2,7 +2,8 @@ function pos = buscaPorHash( qsa, s, a )
     if(length(qsa) > 0)
         for i = 1 : length(qsa)
             %if(isequal(qsa(i).s, s) && (qsa(i).a == a))
-            if((immse(qsa(i).s, s) < 100) && (qsa(i).a == a))
+            %if((immse(qsa(i).s, s) < 1) && (qsa(i).a == a))
+            if((sum(sum(imabsdiff(qsa(i).s, s))) < 1000) && (qsa(i).a == a))
                 pos = i;
                 break;
             end;

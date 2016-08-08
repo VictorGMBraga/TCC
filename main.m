@@ -1,24 +1,33 @@
-vid = videoinput('winvideo', 2, 'RGB32_640x480');
-%src = getselectedsource(vid);
-vid.FramesPerTrigger = 1;
+vid = videoinput('winvideo', 2, 'RGB32_320x240');
+set(vid,'framesperTrigger',1,'TriggerRepeat',Inf);
+start(vid);
 
-%qsa = struct('s',{},'a',{},'r',{});
+%h = imshow(zeros(240,320));
+%hold on;
+
+if(~exist('qsa','var'))
+    qsa = struct('s',{},'a',{},'r',{});
+end;
 a = 1;
 recompensa = 0;
 alpha = 0.7;
 gama = 1;
 
-while true
-    frame = getsnapshot(vid);
+while islogging(vid);
+    frame = getdata(vid,1);
     %frame = frame(:,:,1) >= 90;
     
     recorte = preProcessamento(frame);
-    %imshow(recorte);
+    flushdata(vid);
+    %imimshow(recorte);
     
-    se_menu = abs(double(recorte(329,22)) - 105);
+    %set(h,'Cdata',recorte);
+    %drawnow;
+    
+    se_menu = abs(double(recorte(165,11)) - 105);
     
     if(se_menu < 10)
-        atira();
+        %atira();
     else
         a = 1;
         maior_r = 1;
@@ -69,26 +78,26 @@ while true
         frame = getsnapshot(vid);
         recorte = preProcessamento(frame);
 
-        num0 = imcrop(frame,[208 26 10 10]);
-        num1 = imcrop(frame,[195 26 10 10]);
-        num2 = imcrop(frame,[182 26 10 10]);
-        num3 = imcrop(frame,[169 26 10 10]);
-        num4 = imcrop(frame,[156 26 10 10]);
-        num5 = imcrop(frame,[143 26 10 10]);
-        num6 = imcrop(frame,[130 26 10 10]);
-        num7 = imcrop(frame,[117 26 10 10]);
+        num0 = imcrop(frame,[62 13 5 5]);
+        num1 = imcrop(frame,[68 13 5 5]);
+        num2 = imcrop(frame,[74 13 5 5]);
+        num3 = imcrop(frame,[80 13 5 5]);
+        num4 = imcrop(frame,[86 13 5 5]);
+        num5 = imcrop(frame,[92 13 5 5]);
+        num6 = imcrop(frame,[98 13 5 5]);
+        num7 = imcrop(frame,[104 13 5 5]);
 
         %qtd_vidas = NumVidas(frame);
         %disp(qtd_vidas);
 
-        dig(8) = menorDistancia(num0);
-        dig(7) = menorDistancia(num1);
-        dig(6) = menorDistancia(num2);
-        dig(5) = menorDistancia(num3);
-        dig(4) = menorDistancia(num4);
-        dig(3) = menorDistancia(num5);
-        dig(2) = menorDistancia(num6);
-        dig(1) = menorDistancia(num7);
+        dig(1) = menorDistancia(num0);
+        dig(2) = menorDistancia(num1);
+        dig(3) = menorDistancia(num2);
+        dig(4) = menorDistancia(num3);
+        dig(5) = menorDistancia(num4);
+        dig(6) = menorDistancia(num5);
+        dig(7) = menorDistancia(num6);
+        dig(8) = menorDistancia(num7);
 
         recompensa = sum(10.^(length(dig)-1:-1:0).*dig) - recompensa;
         qsa(posicao).r = qsa(posicao).r + alpha * ( recompensa * gama * maior_r - qsa(posicao).r );
