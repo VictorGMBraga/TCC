@@ -2,8 +2,8 @@ vid = videoinput('winvideo', 2, 'RGB32_320x240');
 set(vid,'framesperTrigger',1,'TriggerRepeat',Inf);
 start(vid);
 
-%h = imshow(zeros(240,320));
-%hold on;
+h = imshow(zeros(240,320));
+hold on;
 
 if(~exist('qsa','var'))
     qsa = struct('s',{},'a',{},'r',{});
@@ -21,8 +21,8 @@ while islogging(vid);
     flushdata(vid);
     %imimshow(recorte);
     
-    %set(h,'Cdata',recorte);
-    %drawnow;
+    set(h,'Cdata',recorte);
+    drawnow;
     
     se_menu = abs(double(recorte(165,11)) - 105);
     
